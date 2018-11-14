@@ -83,8 +83,6 @@ class Vector {
         });
 
         mod1 = Math.sqrt(mod1), mod2 = Math.sqrt(mod2);
-        console.log(mod1,mod2)
-
         if (mod1 * mod2 < precision) return null;
         let theta = dot / (mod1 * mod2);
         theta = theta > 1 ? 1 : theta < -1 ? -1 : theta;
