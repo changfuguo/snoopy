@@ -1,22 +1,17 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+/**
+ * @description 操作transform 相关
+ */
+export Matrix from './matrix/matrix'
+export Vector from './matrix/vector'
+class Transform {
 
-import styles from './styles.css'
-
-export default class ExampleComponent extends Component {
-  static propTypes = {
-    text: PropTypes.string
-  }
-
-  render() {
-    const {
-      text
-    } = this.props
-
-    return (
-      <div className={styles.test}>
-        Example Component: {text}
-      </div>
-    )
-  }
 }
+
+
+ export function create(dom) {
+    if (this instanceof Transform) {
+        return this;
+    }
+    return new Transform(dom);
+ }
+

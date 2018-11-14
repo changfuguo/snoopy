@@ -1,0 +1,1 @@
+export const precision = 1e-6;
