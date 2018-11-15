@@ -1,8 +1,7 @@
 
 import {precision} from './setting';
-import Matrix from './matrix';
 
-class Vector {
+export class Vector {
     constructor(eles) {
         if (eles instanceof Vector) {
             return eles;
@@ -125,9 +124,6 @@ class Vector {
     indexOf(x) {
         return this.elements.indexOf(x);
     }
-    toDiagonalMatrix() {
-        return Matrix.diagonal(this.elements);
-    }
     round() {
         return this.map(function(x) { return Math.round(x); });
     }
@@ -154,5 +150,3 @@ Vector.zero = function(n) {
     }
     return new Vector(eles);
 }
-
-export default Vector;

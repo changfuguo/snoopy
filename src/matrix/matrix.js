@@ -1,6 +1,5 @@
-import Vector from './vector';
 
-class Matrix {
+export class Matrix {
     constructor(matrix) {
         if (matrix instanceof Matrix) {
             return matrix;
@@ -27,14 +26,15 @@ class Matrix {
         var elements = this.elements, 
             i = elements.length, 
             nj = elements[0].length, j;
+        var eles = [];
         while (i--) { 
             j = nj;
-            // elements[i] = [];
+            eles[i] = [];
             while (j--) {
-                elements[i][j] = fn.call(context, elements[i][j], i + 1, j + 1);
+                eles[i][j] = fn.call(context, elements[i][j], i + 1, j + 1);
             }
         }
-        return this
+        return new Matrix(eles);
     }
     element(i, j) {
         let elements = this.elements;
@@ -45,7 +45,7 @@ class Matrix {
     }
     row(i) {
         if (i > this.elements.length) return null;
-        return new Vector(this.elements[i]);
+        return this.elements[i].slice();
     }
     col(j) {
         if (this.elements.length === 0) { return null; }
@@ -54,7 +54,7 @@ class Matrix {
         for (var i = 0; i < n; i++) { 
             col.push(this.elements[i][j-1]); 
         }
-        return new Vector(col);
+        return col.slice();
     }
     dimensions() {
         var cols = (this.elements.length === 0) ? 0 : this.elements[0].length;
@@ -89,7 +89,7 @@ class Matrix {
         return true;
     }
     
-    dup() {
+    clone() {
         return new Matrix(this.elements);
     }
     isSameSizeAs(matrix) {
@@ -176,11 +176,12 @@ class Matrix {
                 elements[i][j] = this.elements[j][i];
             }
         }
+        console.log(elements);
         return new Matrix(elements);
     }
     toRightTriangular() {
         if (this.elements.length === 0) return new Matrix([]);
-        var M = this.dup(), els;
+        var M = this.clone(), els;
         var n = this.elements.length, i, j, np = this.elements[0].length, p;
         for (i = 0; i < n; i++) {
             if (M.elements[i][i] === 0) {
@@ -229,7 +230,7 @@ class Matrix {
         if (this.elements.length === 0) { return this.clone(); }
         var M = matrix.elements || matrix;
         if (typeof(M[0][0]) === 'undefined') { M = new Matrix(M).elements; }
-        var T = this.dup(), cols = T.elements[0].length;
+        var T = this.clone(), cols = T.elements[0].length;
         var i = T.elements.length, nj = M[0].length, j;
         if (i !== M.length) { return null; }
         while (i--) { j = nj;
@@ -254,20 +255,20 @@ class Matrix {
         // diagonal. Cycle through rows from last to first.
         while (i--) {
           // First, normalise diagonal elements to 1
-          els = [];
-          inverse_elements[i] = [];
-          divisor = M.elements[i][i];
-          for (p = 0; p < np; p++) {
-            new_element = M.elements[i][p] / divisor;
-            els.push(new_element);
-            // Shuffle off the current row of the right hand side into the results
-            // array as it will not be modified by later runs through this loop
-            if (p >= n) { inverse_elements[i].push(new_element); }
-          }
-          M.elements[i] = els;
-          // Then, subtract this row from those above it to give the identity matrix
-          // on the left hand side
-          j = i;
+            els = [];
+            inverse_elements[i] = [];
+            divisor = M.elements[i][i];
+            for (p = 0; p < np; p++) {
+                new_element = M.elements[i][p] / divisor;
+                els.push(new_element);
+                // Shuffle off the current row of the right hand side into the results
+                // array as it will not be modified by later runs through this loop
+                if (p >= n) { inverse_elements[i].push(new_element); }
+            }
+            M.elements[i] = els;
+            // Then, subtract this row from those above it to give the identity matrix
+            // on the left hand side
+            j = i;
             while (j--) {
                 els = [];
                 for (p = 0; p < np; p++) {
@@ -277,7 +278,21 @@ class Matrix {
             }
         }
         return new Matrix(inverse_elements);
-      }
+    }
+    setElement(i, j, value) {
+        let elements = this.elements;
+        let dimensions = this.dimensions();
+        if(i < dimensions.rows && i > -1) {
+            if (j < dimensions.cols && j > -1) {
+                elements[i][j] = value;
+            }
+        }
+    }
+    toArray() {
+        return this.elements.reduce(function(first, result) {
+            return first.concat(result);
+        }, [])
+    }
 }
 
 /**
@@ -338,7 +353,3 @@ Matrix.zero = function (n, m) {
 
     return new Matrix(eles);
 }
-
-
-
-export default Matrix;
