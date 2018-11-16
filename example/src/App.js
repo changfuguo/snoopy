@@ -13,13 +13,20 @@ export default class App extends Component {
     let dom = this.refs.test;
     let transform = Transform.create(dom);
     window.transform = transform;
+
+    function start() {
+      transform.scaleY(1.0001);
+      requestAnimationFrame(start);
+    }
+    start()
   }
   //matrix3d(0.939693, 0.34202, 0, 0, -0.34202, 0.939693, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1)  rotate(20deg) translateZ(1px)
   //matrix(0.939693, 0.34202, -0.34202, 0.939693, 0, 0) 
   render () {
     return (
-      <div style={{width:'100px',height: '200px', border: '1px solid red'}} ref="test">
-          asdf
+      <div className="b-box">
+          <div className="b-inner"  ref="test">
+          </div>
       </div>
     )
   }
