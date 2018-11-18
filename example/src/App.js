@@ -12,7 +12,7 @@ export default class App extends Component {
   componentDidMount() {
     let dom = this.refs.test;
     let transform = Transform.create(dom);
-    transform.translateX(30);
+    // transform.translateX(30);
     window.transform = transform;
     
   }
@@ -20,10 +20,9 @@ export default class App extends Component {
   //matrix(0.939693, 0.34202, -0.34202, 0.939693, 0, 0) 
   render () {
     return (
-      <div className="b-box">
-          <div className="b-inner"  ref="test">
-          view-source:https://meyerweb.com/eric/tools/matrix/
-          </div>
+      <div className="wrapper" ref="test">
+          <div className="side-one"></div>
+          <div className="side-two"></div>
       </div>
     )
   }

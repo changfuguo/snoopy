@@ -108,6 +108,11 @@ export class Transform {
     }
     reset() {
         let matrix = Matrix.I(4);
+        this.matrix = matrix;
+        return this;
+    }
+    rotate3d(vector, angle) {
+        let matrix = Transform.rotate3d(vector, angle);
         return produce.call(this, matrix);
     }
 }
@@ -253,6 +258,21 @@ Transform.rotateY = (radian) => {
     elements[0][0] = elements[2][2] = Math.cos(theta);
 	elements[2][0] = elements[0][2] = Math.sin(theta);
     elements[2][0] *= -1;
+    return matrix;
+}
+Transform.rotate3d = (vector, angle) => {
+    vector = vector.elements || vector;
+    angle = toRadian(angle);
+    var x = vector[0], y = vector[1], z = vector[2];
+    var c, i, n, rs, s;
+    s = x * x + y * y + z * z;
+    c = Math.cos(angle);
+    n = Math.sin(angle);
+    i = 1 - c;
+    rs = Math.sqrt(s) * n;
+    const matrix = Matrix.I(4);
+    matrix.elements = [[(x * x + (y * y + z * z) * c) / s, (x * y * i - z * rs) / s, (x * z * i + y * rs) / s, 0], [(x * y * i + z * rs) / s, (y * y + (x * x + z * z) * c) / s, (y * z * i - x * rs) / s, 0], [(x * z * i - y * rs) / s, (y * z * i + x * rs) / s, (z * z + (x * x + y * y) * c) / s, 0], [0, 0, 0, 1]];
+    console.log(matrix);
     return matrix;
 }
 export default Transform;
