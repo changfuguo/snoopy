@@ -7,6 +7,8 @@ import {getElementMatrix, toRadian, TransformAttribute} from './utils/helper'
 
 export {Vector, Matrix, getElementMatrix};
 
+
+
 export class Transform {
     constructor(dom) {
         this.dom = typeof dom == 'string' ? document.querySelector(dom) : dom;
@@ -113,6 +115,14 @@ export class Transform {
     }
     rotate3d(vector, angle) {
         let matrix = Transform.rotate3d(vector, angle);
+        return produce.call(this, matrix);
+    }
+    translate3d(x, y, z) {
+        let matrix = Transform.translate3d(x, y, z);
+        return produce.call(this, matrix);
+    }
+    scale3d() {
+        let matrix = Transform.scale3d(x, y, z);
         return produce.call(this, matrix);
     }
 }
@@ -273,6 +283,18 @@ Transform.rotate3d = (vector, angle) => {
     const matrix = Matrix.I(4);
     matrix.elements = [[(x * x + (y * y + z * z) * c) / s, (x * y * i - z * rs) / s, (x * z * i + y * rs) / s, 0], [(x * y * i + z * rs) / s, (y * y + (x * x + z * z) * c) / s, (y * z * i - x * rs) / s, 0], [(x * z * i - y * rs) / s, (y * z * i + x * rs) / s, (z * z + (x * x + y * y) * c) / s, 0], [0, 0, 0, 1]];
     console.log(matrix);
+    return matrix;
+}
+
+Transform.translate3d = (x, y, z) => {
+    const matrix = Matrix.I();
+    matrix.elements = [[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z], [0, 0, 0, 1]];
+    return matrix;
+}
+
+Transform.scale3d = (x, y, z) =>{
+    const matrix = Matrix.I();
+    matrix.elements =  [[x, 0, 0, 0], [0, y, 0, 0], [0, 0, z, 0], [0, 0, 0, 1]];
     return matrix;
 }
 export default Transform;
