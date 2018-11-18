@@ -7,13 +7,11 @@ import {getElementMatrix, toRadian, TransformAttribute} from './utils/helper'
 
 export {Vector, Matrix, getElementMatrix};
 
-
-
 export class Transform {
     constructor(dom) {
         this.dom = typeof dom == 'string' ? document.querySelector(dom) : dom;
-      
         var _matrix = getElementMatrix(dom);
+
         Object.defineProperty(this, 'matrix', {
             configurable: false,
             enumerable: true,
@@ -24,7 +22,6 @@ export class Transform {
                 _matrix = value;
                 // 设置transform的样式 
                 let {rows, cols} = _matrix.dimensions();
-                // let array = _matrix.clone().transpose().toArray();
                 let array = [];
                 for(let i = 0; i < rows; i++) {
                     for(let j = 0; j < cols; j++) {
@@ -38,80 +35,84 @@ export class Transform {
     }
     rotateX(radian) {
         let matrix = Transform.rotateX(radian);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
     }
     translate(translateX, translateY) {
         let matrix = Transform.translate(translateX, translateY);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
 
     }
     translateX(translateX) {
         let matrix = Transform.translateX(translateX);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
 
     }
     translateY(translateY) {
         let matrix = Transform.translateY(translateY);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
 
     }
     translateZ(distance) {
         let matrix = Transform.translateZ(distance);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
 
     }
     skew(angleX, angleY) {
         let matrix = Transform.skew(angleX, angleY);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
     }
     skewX(angleX) {
         let matrix = Transform.skewX(angleX);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
     }
     skewY(angleY) {
         let matrix = Transform.skewY(angleY);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
 
     }
     scale(scaleX, scaleY) {
         let matrix = Transform.scale(scaleX, scaleY);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
 
     }
     scaleX(scaleX) {
         let matrix = Transform.scaleX(scaleX);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
 
     }
     scaleY(scaleY) {
         let matrix = Transform.scaleY(scaleY);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
     }
     scaleZ(scaleZ) {
         let matrix = Transform.scale(scaleZ);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
 
     }
     rotate(radian) {
         let matrix = Transform.rotate(radian);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
 
     }
     rotateX(radian) {
         let matrix = Transform.rotateX(radian);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
     }
     rotateY(radian) {
         let matrix = Transform.rotateY(radian);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
     }
     rotateZ(radian) {
         let matrix = Transform.rotateZ(radian);
-        return Transform.produce.call(this, matrix);
+        return produce.call(this, matrix);
+    }
+    reset() {
+        let matrix = Matrix.I(4);
+        return produce.call(this, matrix);
     }
 }
 
-Transform.produce = function(matrix) {
+function produce (matrix) {
     let result = this.matrix.multiply(matrix);
     this.matrix = result;
     return this;
@@ -127,8 +128,8 @@ Transform.rotateX = (angle) => {
     let matrix = Matrix.I(4);
 
     let elements = matrix.elements;
-    elements[0][1] = elements[2][2] = Math.cos(radian);
-    elements[3][1] = elements[1][2] = Math.sin(radian);
+    elements[1][1] = elements[2][2] = Math.cos(radian);
+    elements[2][1] = elements[1][2] = Math.sin(radian);
     elements[1][2] *= -1;
     return matrix;
 }
@@ -198,7 +199,7 @@ Transform.scale = (scalar, scalarY) => {
     const matrix = Matrix.I(4);
     const {elements} = matrix;
     elements[0][0] = scalar
-	elements[2][2] = !!scalarY ? scalarY : scalar
+	elements[1][1] = !!scalarY ? scalarY : scalar
     return matrix;
 }
 Transform.scaleX = (scalar) => {
@@ -210,7 +211,7 @@ Transform.scaleX = (scalar) => {
 Transform.scaleY = (scalarY) => {
     const matrix = Matrix.I(4);
     const {elements} = matrix;
-	elements[2][2] = scalarY;
+	elements[1][1] = scalarY;
     return matrix;
 }
 Transform.scaleZ = (scalar) => {

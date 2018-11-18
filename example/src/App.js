@@ -12,13 +12,9 @@ export default class App extends Component {
   componentDidMount() {
     let dom = this.refs.test;
     let transform = Transform.create(dom);
+    transform.translateX(30);
     window.transform = transform;
-
-    function start() {
-      transform.scaleY(1.0001);
-      requestAnimationFrame(start);
-    }
-    start()
+    
   }
   //matrix3d(0.939693, 0.34202, 0, 0, -0.34202, 0.939693, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1)  rotate(20deg) translateZ(1px)
   //matrix(0.939693, 0.34202, -0.34202, 0.939693, 0, 0) 
@@ -26,6 +22,7 @@ export default class App extends Component {
     return (
       <div className="b-box">
           <div className="b-inner"  ref="test">
+          view-source:https://meyerweb.com/eric/tools/matrix/
           </div>
       </div>
     )

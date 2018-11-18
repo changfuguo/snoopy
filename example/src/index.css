@@ -13,4 +13,5 @@ body {
   width: 200px;
   height: 100px;
   border: 1px solid red;
+  transition: transform 2s cubic-bezier(.25,.01,.25,1);
 }
