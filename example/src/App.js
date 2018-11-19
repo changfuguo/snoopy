@@ -10,19 +10,26 @@ import {Transform} from 'transform.js';
 // var m2 = new Matrix([[1,0,0],[0,1,100],[0,0,1]]);
 export default class App extends Component {
   componentDidMount() {
-    let dom = this.refs.test;
-    let transform = Transform.create(dom);
+    let test1 = this.refs.test1;
+    let transform = Transform.create(test1);
     // transform.translateX(30);
     window.transform = transform;
+    window.test = this.refs.test;
     
   }
   //matrix3d(0.939693, 0.34202, 0, 0, -0.34202, 0.939693, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1)  rotate(20deg) translateZ(1px)
   //matrix(0.939693, 0.34202, -0.34202, 0.939693, 0, 0) 
   render () {
     return (
-      <div className="wrapper" ref="test">
+      <div className="box">
+      <div className="wrapper top" ref="test">
           <div className="side-one"></div>
           <div className="side-two"></div>
+      </div>
+      <div className="wrapper bottom" ref="test1">
+          <div className="side-one"></div>
+          <div className="side-two"></div>
+      </div>
       </div>
     )
   }
