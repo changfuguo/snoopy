@@ -7,7 +7,16 @@ import {getElementMatrix, toRadian, TransformAttribute} from './utils/helper'
 
 export {Vector, Matrix, getElementMatrix};
 
-
+function  doTransform(target, name, descriptor) {
+    let oldValue = descriptor.value;
+    descriptor.value = function(...args) {
+        let rawFn = Transform[name];
+        let matrix = rawFn(...args);
+        let result = this.matrix.multiply(matrix);
+        this.matrix = result;
+        return  this;
+    }
+}
 
 export class Transform {
     constructor(dom) {
@@ -35,6 +44,7 @@ export class Transform {
             }
         })
     }
+    @doTransform
     rotateX(radian) {
         let matrix = Transform.rotateX(radian);
         return produce.call(this, matrix);
@@ -121,7 +131,7 @@ export class Transform {
         let matrix = Transform.translate3d(x, y, z);
         return produce.call(this, matrix);
     }
-    scale3d() {
+    scale3d(x, y, z) {
         let matrix = Transform.scale3d(x, y, z);
         return produce.call(this, matrix);
     }
@@ -296,6 +306,10 @@ Transform.scale3d = (x, y, z) =>{
     const matrix = Matrix.I();
     matrix.elements =  [[x, 0, 0, 0], [0, y, 0, 0], [0, 0, z, 0], [0, 0, 0, 1]];
     return matrix;
+}
+
+Transform.combine = (...args) => {
+
 }
 export default Transform;
 
