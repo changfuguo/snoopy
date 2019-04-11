@@ -30,12 +30,12 @@ body {
   border-width: 2px;
 }
  .wrapper.top {
-   top: 100px;
+   top: 40px;
    left: 200px;
  }
  .wrapper.bottom {
   bottom: 100px;
-  right:200px;
+  left: 200px;
 }
 .wrapper div {
     position: absolute;
@@ -64,7 +64,7 @@ body {
    background: #ef4e65 ;
 }
  
-.wrapper:hover {
-  -webkit-transform: rotateY(-1turn);
-  transform: rotateY(-1turn);
+.wrapper.bottom.active {
+  /* transform: rotate(15deg) translateX(230px) scale(0.5) scale(0.9) ; */
+  transform: translate(-10px, -20px) scale(2) rotate(190deg);
 }

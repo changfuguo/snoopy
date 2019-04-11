@@ -16,6 +16,32 @@ npm install --save transform.js
 
 ## transform知识点
 
+* 2d映射
+
+```javascript
+	/* matrixの形式
+       "matrix(a,b,c,d,e,f,g,h,i)"
+       | a, b, c |
+       | d, e, f |
+       | g, h, i |
+
+    */
+```
+* 3D映射
+	
+```javascript
+	console.log(matrix)  // ex) matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1)が表示される。
+
+    /* matrix 
+       "matrix3d(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p)" 
+       | a, b, c, d |
+       | e, f, g, h |
+       | i, j, k, l |
+       | m, n, o, p |
+
+	*/
+```
+
 * 3d位移
 
 > traslateZ()和translate3d()
@@ -65,10 +91,28 @@ npm install --save transform.js
 
 ![](https://img-blog.csdn.net/20161121172427521?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
 
+### 矩阵变换的说明
+
+![matrix-transform](https://raw.githubusercontent.com/changfuguo/transform.js/master/example/static/matrix-transform.jpg)
 
 
 
+### 1. 例子
 
+```
+
+#o1 {
+   transform-origin: 0px 0px;
+   transform: rotate(15deg) translateX(230px) scale(1.5);
+}
+
+```
+
+此时在原始矩阵基础上, 作如下矩阵相乘
+
+![matrix-transform](https://raw.githubusercontent.com/changfuguo/transform.js/master/example/static/example-1.jpg)
+
+> 总结思路是，原始矩阵都是1x1x1x1，三维矩阵，按照transform中出现的顺序依次相乘
 
 
 

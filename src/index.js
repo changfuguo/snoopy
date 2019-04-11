@@ -22,7 +22,7 @@ export class Transform {
     constructor(dom) {
         this.dom = typeof dom == 'string' ? document.querySelector(dom) : dom;
         var _matrix = getElementMatrix(dom);
-
+        const that = this;
         Object.defineProperty(this, 'matrix', {
             configurable: false,
             enumerable: true,
@@ -31,16 +31,7 @@ export class Transform {
             },
             set: function(value) {
                 _matrix = value;
-                // 设置transform的样式 
-                let {rows, cols} = _matrix.dimensions();
-                let array = [];
-                for(let i = 0; i < rows; i++) {
-                    for(let j = 0; j < cols; j++) {
-                        array[j  + i * rows] = _matrix.elements[j][i];
-                    }
-                }
-                let style = 'matrix3d(' + array.join(',') + ')';
-                this.dom.style[TransformAttribute] = style;
+                this.dom.style[TransformAttribute] = that.toString();
             }
         })
     }
@@ -134,6 +125,17 @@ export class Transform {
     scale3d(x, y, z) {
         let matrix = Transform.scale3d(x, y, z);
         return produce.call(this, matrix);
+    }
+    toString() {
+        const m = this.matrix;
+        let {rows, cols} = m.dimensions();
+        let array = [];
+        for(let i = 0; i < rows; i++) {
+            for(let j = 0; j < cols; j++) {
+                array[j  + i * rows] = m.elements[j][i];
+            }
+        }
+        return'matrix3d(' + array.join(',') + ')';
     }
 }
 
@@ -292,7 +294,6 @@ Transform.rotate3d = (vector, angle) => {
     rs = Math.sqrt(s) * n;
     const matrix = Matrix.I(4);
     matrix.elements = [[(x * x + (y * y + z * z) * c) / s, (x * y * i - z * rs) / s, (x * z * i + y * rs) / s, 0], [(x * y * i + z * rs) / s, (y * y + (x * x + z * z) * c) / s, (y * z * i - x * rs) / s, 0], [(x * z * i - y * rs) / s, (y * z * i + x * rs) / s, (z * z + (x * x + y * y) * c) / s, 0], [0, 0, 0, 1]];
-    console.log(matrix);
     return matrix;
 }
 
@@ -311,5 +312,6 @@ Transform.scale3d = (x, y, z) =>{
 Transform.combine = (...args) => {
 
 }
+
 export default Transform;
 
