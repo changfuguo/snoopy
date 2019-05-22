@@ -14,8 +14,7 @@ body {
   position: relative;
 }
 .wrapper {
-  -webkit-transition: all 1s ease-in;
-  transition: all 6s ease-in;
+  
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   position: absolute;
@@ -36,6 +35,8 @@ body {
  .wrapper.bottom {
   bottom: 100px;
   left: 200px;
+  /* -webkit-transition: all 3s ease;
+  transition: all 3s ease; */
 }
 .wrapper div {
     position: absolute;
@@ -66,5 +67,6 @@ body {
  
 .wrapper.bottom.active {
   /* transform: rotate(15deg) translateX(230px) scale(0.5) scale(0.9) ; */
-  transform: translate(-10px, -20px) scale(2) rotate(190deg);
+  /* transform: translate(-10px, -20px) scale(2) rotate(180deg); */
+  transform: rotateX(180deg);
 }
