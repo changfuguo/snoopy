@@ -52,5 +52,9 @@ export default class Tween {
     toMatrix() {
         return this.currentState.toMatrix();
     }
-    
+    reverse() {
+        const temp = this.startState;
+        this.startState = this.endState;
+        this.endState = temp;
+    }
 }
