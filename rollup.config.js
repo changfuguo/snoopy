@@ -9,7 +9,8 @@ import svgr from '@svgr/rollup'
 import pkg from './package.json'
 
 export default {
-  input: 'src/index.js',
+  // input: 'snoopy/main.js',
+  input: 'snoopy/index.js',
   output: [
     {
       file: pkg.main,

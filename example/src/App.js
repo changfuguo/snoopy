@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import snabbt from 'snoopy'
+import snabbt , {Matrix, Tween} from 'snoopy'
+console.log(Tween)
 // import * as Rematrix from 'rematrix';
 
 // import Snoopy, {Matrix} from 'snoopy';
@@ -7,11 +8,8 @@ import snabbt from 'snoopy'
 // window.Matrix = Matrix;
 export default class App extends Component {
   componentDidMount() {
-     
-
   }
   start() {
-
     const hasActive = this.refs.test1.classList.contains('active');
     let test = this.refs.test;
     // const snoopy = window.snoopy = new Snoopy(test, {
