@@ -48,5 +48,9 @@ export default class Tween {
             }
         })
     }
+
+    toMatrix() {
+        return this.currentState.toMatrix();
+    }
     
 }

@@ -41,5 +41,6 @@ export default class State {
         if (this.scalePost) {
             this.matrix.scale3d(this.scalePost[0], this.scalePost[1], this.scalePost[2]);
         }
+        return this.matrix;
     }
 }
