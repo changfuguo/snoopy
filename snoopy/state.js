@@ -8,8 +8,8 @@ export default class State {
             opacity: undefined,
             width: undefined,
             height: undefined,
-            perspective: undefined,
-            transformOrigin: undefined
+            // perspective: undefined,
+            // transformOrigin: undefined
         };
     }
 
@@ -42,5 +42,8 @@ export default class State {
             this.matrix.scale3d(this.scalePost[0], this.scalePost[1], this.scalePost[2]);
         }
         return this.matrix;
+    }
+    getProperties() {
+        return this.properties;
     }
 }
